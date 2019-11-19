@@ -1,0 +1,11 @@
+{
+  "name": "secret-santa",
+  "version": "1.0.0",
+  "description": "A web app to organize a family secret santa 🎅",
+  "main": "index.ts",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Baboo7",
+  "license": "MIT"
+}
