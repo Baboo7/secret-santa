@@ -40,10 +40,18 @@ class DrawPage {
     const app = document.getElementById("app") as HTMLElement;
     app.appendChild(title);
     if (this.displayDraw) {
-      Draw.create(app, "John", "Jane", this.toggleDrawDisplay);
+      const participant = this.selectedParticipant || "";
+      const receiver = this.drawGraph.get(this.selectedParticipant!) || "";
+      Draw.create(app, participant, receiver, this.toggleDrawDisplay);
     } else {
       const options = Array.from(this.drawGraph.keys());
-      DrawActionBar.create(app, options, this.toggleDrawDisplay);
+      this.selectedParticipant = options[0] ? options[0] : null;
+      DrawActionBar.create(
+        app,
+        options,
+        this.toggleDrawDisplay,
+        this.selectParticipant
+      );
     }
   }
 
@@ -99,6 +107,14 @@ class DrawPage {
   private draw = (): void => {
     const constraintsGraph: ConstraintsGraphType = this.buildDrawConstraintsGraph();
     this.drawGraph = this.buildDrawGraph(constraintsGraph);
+  };
+
+  /**
+   * Select a participant.
+   * @param participant {string} Name of the participant
+   */
+  private selectParticipant = (participant: string): void => {
+    this.selectedParticipant = participant;
   };
 
   /**

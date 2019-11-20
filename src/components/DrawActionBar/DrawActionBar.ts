@@ -6,18 +6,23 @@ class DrawActionBar {
    * @param parent {HTMLElement} HTML element into which to insert component
    * @param options {string[]} List of options to display
    * @param onButtonClick {Function}
+   * @param onParticipantSelected {Function}
    */
   public create(
     parent: HTMLElement,
     options: string[],
-    onButtonClick: () => void
+    onButtonClick: () => void,
+    onParticipantSelected: (participant: string) => void
   ): void {
     // Create component elements
     const component = document.createElement("div") as HTMLElement;
     component.className = "action-bar";
 
     const select = document.createElement("select") as HTMLSelectElement;
-    select.id = "action-bar-select";
+    select.onchange = () => {
+      const participant = select.options[select.selectedIndex].value;
+      onParticipantSelected(participant);
+    };
 
     options.forEach((text: string) => {
       const option = document.createElement("option") as HTMLOptionElement;
@@ -27,7 +32,6 @@ class DrawActionBar {
     });
 
     const button = document.createElement("button") as HTMLButtonElement;
-    button.id = "action-bar-button";
     button.appendChild(document.createTextNode("See your draw 🎁"));
     button.onclick = onButtonClick;
 
