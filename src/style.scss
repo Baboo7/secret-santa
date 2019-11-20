@@ -3,6 +3,17 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+html {
+  background: rgb(255, 202, 206);
+  background: radial-gradient(
+    circle,
+    rgba(255, 202, 206, 1) 0%,
+    rgba(255, 255, 255, 1) 26%,
+    rgba(255, 255, 255, 1) 53%,
+    rgba(197, 242, 255, 1) 78%
+  );
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -16,9 +27,13 @@ body {
   width: 80%;
   max-width: 1000px;
   height: 66%;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 5px 5px 20px silver;
 }
 
 .action-bar {
