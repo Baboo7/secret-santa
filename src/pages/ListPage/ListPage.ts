@@ -1,6 +1,6 @@
 import "./ListPage.scss";
 
-import { Participant } from "../../components";
+import { ListActionBar, Participant } from "../../components";
 import { removeChildren } from "../../services/domService";
 import { isStrBlank } from "../../services/validatorService";
 
@@ -35,18 +35,18 @@ class ListPage {
     const title = document.createElement("h1");
     title.appendChild(document.createTextNode("Secret Santa"));
 
-    this.participantInput = document.createElement("input") as HTMLInputElement;
-    this.participantInput.id = "participant-input";
-    this.participantInput.placeholder = "Enter name of participant";
-    this.participantInput.addEventListener("keydown", this.handleKeyDown);
-
     this.participantsList = document.createElement("div") as HTMLElement;
     this.participantsList.id = "participants-list";
 
     const app = document.getElementById("app") as HTMLElement;
     app.appendChild(title);
-    app.appendChild(this.participantInput);
+    ListActionBar.create(app);
     app.appendChild(this.participantsList);
+
+    this.participantInput = document.getElementById(
+      "participant-input"
+    ) as HTMLInputElement;
+    this.participantInput.addEventListener("keydown", this.handleKeyDown);
   }
 
   /**
