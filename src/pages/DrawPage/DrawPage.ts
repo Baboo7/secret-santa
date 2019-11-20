@@ -1,5 +1,6 @@
 import "./DrawPage.scss";
 
+import { DrawActionBar } from "../../components";
 import { removeChildren } from "../../services/domService";
 import { getRandomItem } from "../../services/randomService";
 
@@ -27,13 +28,15 @@ class DrawPage {
    * Build the page.
    */
   public build(): void {
+    this.draw();
+
     const title = document.createElement("h1");
     title.appendChild(document.createTextNode("Draw"));
 
     const app = document.getElementById("app") as HTMLElement;
     app.appendChild(title);
-
-    this.draw();
+    const options = Array.from(this.drawGraph.keys());
+    DrawActionBar.create(app, options);
   }
 
   /**

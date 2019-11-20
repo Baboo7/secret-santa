@@ -28,13 +28,15 @@ body {
   flex-basis: auto;
 }
 
-input {
+input,
+select {
   height: 48px;
   flex-grow: 1;
   flex-shrink: 0;
   font-size: 16px;
   border: none;
   border-left: 1px solid silver;
+  background-color: white;
   text-indent: 16px;
 }
 
