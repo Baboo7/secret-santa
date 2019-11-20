@@ -2,6 +2,8 @@
 
 A simple web app to organise a warm secret santa in large families.
 
+![screen1](doc/screen1.png)
+
 ## How to use
 
 Enter the name of the participants in the input field.
