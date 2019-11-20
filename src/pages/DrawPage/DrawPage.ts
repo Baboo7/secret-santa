@@ -1,6 +1,6 @@
 import "./DrawPage.scss";
 
-import { DrawActionBar } from "../../components";
+import { Draw, DrawActionBar } from "../../components";
 import { removeChildren } from "../../services/domService";
 import { getRandomItem } from "../../services/randomService";
 
@@ -8,18 +8,37 @@ type ConstraintsGraphType = [string, string[]][];
 type DrawGraphType = Map<string, string>;
 
 class DrawPage {
+  private displayDraw: boolean;
+  private displayDrawButton: HTMLElement | null;
   private drawGraph: DrawGraphType;
+  private hideDrawButton: HTMLElement | null;
   private participants: Map<string, string | null>;
+  private selectedParticipant: string | null;
 
   constructor(participants: Map<string, string | null>) {
+    this.displayDraw = false;
+    this.displayDrawButton = null;
     this.drawGraph = new Map();
+    this.hideDrawButton = null;
     this.participants = participants;
+    this.selectedParticipant = null;
   }
 
   /**
    * Destroy the page.
    */
   public destroy(): void {
+    if (this.displayDrawButton) {
+      this.displayDrawButton.removeEventListener(
+        "click",
+        this.toggleDrawDisplay
+      );
+      this.displayDrawButton = null;
+    }
+    if (this.hideDrawButton) {
+      this.hideDrawButton.removeEventListener("click", this.toggleDrawDisplay);
+      this.hideDrawButton = null;
+    }
     const app = document.getElementById("app") as HTMLElement;
     removeChildren(app);
   }
@@ -35,8 +54,22 @@ class DrawPage {
 
     const app = document.getElementById("app") as HTMLElement;
     app.appendChild(title);
-    const options = Array.from(this.drawGraph.keys());
-    DrawActionBar.create(app, options);
+    if (this.displayDraw) {
+      Draw.create(app, "John", "Jane");
+
+      this.hideDrawButton = document.getElementById(
+        "draw-button"
+      ) as HTMLElement;
+      this.hideDrawButton.addEventListener("click", this.toggleDrawDisplay);
+    } else {
+      const options = Array.from(this.drawGraph.keys());
+      DrawActionBar.create(app, options);
+
+      this.displayDrawButton = document.getElementById(
+        "action-bar-button"
+      ) as HTMLElement;
+      this.displayDrawButton.addEventListener("click", this.toggleDrawDisplay);
+    }
   }
 
   /**
@@ -91,6 +124,17 @@ class DrawPage {
   private draw = (): void => {
     const constraintsGraph: ConstraintsGraphType = this.buildDrawConstraintsGraph();
     this.drawGraph = this.buildDrawGraph(constraintsGraph);
+  };
+
+  /**
+   * Toggle the display of the draw.
+   */
+  private toggleDrawDisplay = (): void => {
+    this.displayDraw = !this.displayDraw;
+
+    // Rerender page
+    this.destroy();
+    this.build();
   };
 }
 
