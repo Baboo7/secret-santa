@@ -5,12 +5,19 @@ import { removeChildren } from "../../services/domService";
 import { isStrBlank } from "../../services/validatorService";
 
 class ListPage {
+  private drawButton: HTMLElement | null;
+  private onButtonClick: () => void;
   private participantInput: HTMLInputElement | null;
   private participantsList: HTMLElement | null;
   private participants: Map<string, string | null>;
   private selectedParticipant: string | null;
 
-  constructor(participants: Map<string, string | null>) {
+  constructor(
+    participants: Map<string, string | null>,
+    onButtonClick: () => void
+  ) {
+    this.drawButton = null;
+    this.onButtonClick = onButtonClick;
     this.participants = participants;
     this.participantInput = null;
     this.participantsList = null;
@@ -22,7 +29,9 @@ class ListPage {
    */
   public destroy(): void {
     this.participantInput!.removeEventListener("keydown", this.handleKeyDown);
+    this.drawButton!.removeEventListener("click", this.onButtonClick);
     this.participantInput = null;
+    this.drawButton = null;
     this.participantsList = null;
     const app = document.getElementById("app") as HTMLElement;
     removeChildren(app);
@@ -47,6 +56,9 @@ class ListPage {
       "participant-input"
     ) as HTMLInputElement;
     this.participantInput.addEventListener("keydown", this.handleKeyDown);
+
+    this.drawButton = document.getElementById("draw-button") as HTMLElement;
+    this.drawButton.addEventListener("click", this.onButtonClick);
   }
 
   /**

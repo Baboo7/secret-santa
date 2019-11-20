@@ -1,6 +1,6 @@
 import "./style.scss";
 
-import { ListPage } from "./pages";
+import { DrawPage, ListPage } from "./pages";
 
 /**
  * Holds participants.
@@ -9,5 +9,12 @@ import { ListPage } from "./pages";
  */
 const participants: Map<string, string | null> = new Map();
 
-const listPage = new ListPage(participants);
+const navigateToDrawPage = (): void => {
+  listPage.destroy();
+  drawPage.build();
+};
+
+const drawPage = new DrawPage(participants);
+const listPage = new ListPage(participants, navigateToDrawPage);
+
 listPage.build();
