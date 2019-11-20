@@ -10,12 +10,14 @@ type DrawGraphType = Map<string, string>;
 class DrawPage {
   private displayDraw: boolean;
   private drawGraph: DrawGraphType;
+  private hasDrawn: boolean;
   private participants: Map<string, string | null>;
   private selectedParticipant: string | null;
 
   constructor(participants: Map<string, string | null>) {
     this.displayDraw = false;
     this.drawGraph = new Map();
+    this.hasDrawn = false;
     this.participants = participants;
     this.selectedParticipant = null;
   }
@@ -32,7 +34,7 @@ class DrawPage {
    * Build the page.
    */
   public build(): void {
-    this.draw();
+    this.drawOnce();
 
     const title = document.createElement("h1");
     title.appendChild(document.createTextNode("Draw"));
@@ -102,11 +104,17 @@ class DrawPage {
   };
 
   /**
-   * Draw.
+   * Draw if it has not been performed yet.
    */
-  private draw = (): void => {
+  private drawOnce = (): void => {
+    if (this.hasDrawn) {
+      return;
+    }
+
     const constraintsGraph: ConstraintsGraphType = this.buildDrawConstraintsGraph();
     this.drawGraph = this.buildDrawGraph(constraintsGraph);
+
+    this.hasDrawn = true;
   };
 
   /**
