@@ -11,7 +11,7 @@ class Participant {
    * @param isSelected {boolean} Whether the participant is selected
    * @param onClick {OnClickType}
    */
-  create(
+  public create(
     parent: HTMLElement,
     name: string,
     spouseName: string | null,
