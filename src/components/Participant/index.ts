@@ -6,15 +6,19 @@ class Participant {
    * @param parent {HTMLElement} HTML element into which to insert component
    * @param name {string} Name of the participant
    * @param spouseName {string | null} Name of the participant's spouse
+   * @param isSelected {boolean} Whether the participant is selected
    */
   create(
     parent: HTMLElement,
     name: string,
     spouseName: string | null,
+    isSelected: boolean,
   ): void {
     // Create component elements
     const component = document.createElement("div");
-    component.className = "participant";
+    const className = ["participant"];
+    if (isSelected) className.push("selected");
+    component.className = className.join(" ");
 
     const nameNode = document.createTextNode(name);
 

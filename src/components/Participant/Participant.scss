@@ -7,6 +7,10 @@
     border-top: 1px solid gainsboro;
   }
 
+  &.selected {
+    background-color: aliceblue;
+  }
+
   span.spouse {
     margin-left: 16px;
     color: silver;
