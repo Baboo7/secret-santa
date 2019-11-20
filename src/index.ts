@@ -2,6 +2,7 @@ import "./style.scss";
 
 import { Participant } from "./components";
 import { isStrBlank } from "./services/validatorService";
+import { removeChildren } from "./services/domService";
 
 /**
  * Holds participants.
@@ -26,7 +27,15 @@ participantInput.addEventListener("keydown", (ev: KeyboardEvent) => {
     }
 
     participants.set(participantName, null);
-    Participant.create(participantsList, participantName);
     participantInput.value = "";
+    renderParticipantList();
   }
 });
+
+const renderParticipantList = (): void => {
+  removeChildren(participantsList);
+  participants.forEach((_: string | null, key: string) => {
+    Participant.create(participantsList, key, handleParticipantClicked);
+  });
+};
+
