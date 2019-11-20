@@ -8,7 +8,7 @@ class ListActionBar {
   public create(parent: HTMLElement): void {
     // Create component elements
     const component = document.createElement("div") as HTMLElement;
-    component.id = "action-bar";
+    component.className = "action-bar";
 
     const input = document.createElement("input") as HTMLInputElement;
     input.id = "participant-input";
