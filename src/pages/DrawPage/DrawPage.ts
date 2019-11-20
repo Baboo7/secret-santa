@@ -9,17 +9,13 @@ type DrawGraphType = Map<string, string>;
 
 class DrawPage {
   private displayDraw: boolean;
-  private displayDrawButton: HTMLElement | null;
   private drawGraph: DrawGraphType;
-  private hideDrawButton: HTMLElement | null;
   private participants: Map<string, string | null>;
   private selectedParticipant: string | null;
 
   constructor(participants: Map<string, string | null>) {
     this.displayDraw = false;
-    this.displayDrawButton = null;
     this.drawGraph = new Map();
-    this.hideDrawButton = null;
     this.participants = participants;
     this.selectedParticipant = null;
   }
@@ -28,17 +24,6 @@ class DrawPage {
    * Destroy the page.
    */
   public destroy(): void {
-    if (this.displayDrawButton) {
-      this.displayDrawButton.removeEventListener(
-        "click",
-        this.toggleDrawDisplay
-      );
-      this.displayDrawButton = null;
-    }
-    if (this.hideDrawButton) {
-      this.hideDrawButton.removeEventListener("click", this.toggleDrawDisplay);
-      this.hideDrawButton = null;
-    }
     const app = document.getElementById("app") as HTMLElement;
     removeChildren(app);
   }
@@ -55,20 +40,10 @@ class DrawPage {
     const app = document.getElementById("app") as HTMLElement;
     app.appendChild(title);
     if (this.displayDraw) {
-      Draw.create(app, "John", "Jane");
-
-      this.hideDrawButton = document.getElementById(
-        "draw-button"
-      ) as HTMLElement;
-      this.hideDrawButton.addEventListener("click", this.toggleDrawDisplay);
+      Draw.create(app, "John", "Jane", this.toggleDrawDisplay);
     } else {
       const options = Array.from(this.drawGraph.keys());
-      DrawActionBar.create(app, options);
-
-      this.displayDrawButton = document.getElementById(
-        "action-bar-button"
-      ) as HTMLElement;
-      this.displayDrawButton.addEventListener("click", this.toggleDrawDisplay);
+      DrawActionBar.create(app, options, this.toggleDrawDisplay);
     }
   }
 

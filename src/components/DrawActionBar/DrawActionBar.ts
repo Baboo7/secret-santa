@@ -5,8 +5,13 @@ class DrawActionBar {
    * Create a new action bar and insert it into the DOM.
    * @param parent {HTMLElement} HTML element into which to insert component
    * @param options {string[]} List of options to display
+   * @param onButtonClick {Function}
    */
-  public create(parent: HTMLElement, options: string[]): void {
+  public create(
+    parent: HTMLElement,
+    options: string[],
+    onButtonClick: () => void
+  ): void {
     // Create component elements
     const component = document.createElement("div") as HTMLElement;
     component.className = "action-bar";
@@ -24,6 +29,7 @@ class DrawActionBar {
     const button = document.createElement("button") as HTMLButtonElement;
     button.id = "action-bar-button";
     button.appendChild(document.createTextNode("See your draw 🎁"));
+    button.onclick = onButtonClick;
 
     // Build component
     component.appendChild(select);

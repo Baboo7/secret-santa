@@ -6,11 +6,13 @@ class Draw {
    * @param parent {HTMLElement} HTML element into which to insert component
    * @param participant {string} Name of the participant
    * @param receiver {string} Name of the participant's receiver
+   * @param onButtonClick {Function}
    */
   public create(
     parent: HTMLElement,
     participant: string,
-    receiver: string
+    receiver: string,
+    onButtonClick: () => void
   ): void {
     // Create component elements
     const component = document.createElement("div") as HTMLElement;
@@ -34,6 +36,7 @@ class Draw {
     const button = document.createElement("button") as HTMLButtonElement;
     button.id = "draw-button";
     button.appendChild(document.createTextNode("Hide your draw"));
+    button.onclick = onButtonClick;
 
     // Build component
     component.appendChild(div);
