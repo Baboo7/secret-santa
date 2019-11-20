@@ -2,6 +2,13 @@ import "./style.scss";
 
 import { Participant } from "./components";
 
+/**
+ * Holds participants.
+ * - key: participant name
+ * - value: spouse name
+ */
+const participants: Map<string, string | null> = new Map();
+
 const participantInput = document.getElementById(
   "participant-input"
 ) as HTMLInputElement;
@@ -12,7 +19,8 @@ const participantsList = document.getElementById(
 participantInput.addEventListener("keydown", (ev: KeyboardEvent) => {
   // On Enter key down
   if (ev.keyCode === 13) {
-    const participantName = participantInput.value;
+    const participantName = participantInput.value.trim();
+    participants.set(participantName, null);
     Participant.create(participantsList, participantName);
     participantInput.value = "";
   }
